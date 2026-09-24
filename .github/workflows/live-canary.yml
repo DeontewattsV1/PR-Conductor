@@ -26,7 +26,7 @@ jobs:
       normalize_titles: true
       comments: true
       dry_run: false
-      default_single_strategy: rebase
+      default_single_strategy: merge
       default_multi_strategy: squash
       release_strategy: merge
       default_stack_strategy: squash
