@@ -22,6 +22,13 @@ jobs:
             bash -n "$file"
           done
 
+      - name: Reject shell backticks
+        run: |
+          if grep -R -n '\`' scripts/lib scripts/pr-conductor.sh; then
+            echo "Legacy shell backticks are forbidden in the runtime engine."
+            exit 1
+          fi
+
       - name: Required package files
         run: |
           test -f action.yml
