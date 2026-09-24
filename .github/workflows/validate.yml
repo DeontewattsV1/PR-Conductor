@@ -3,7 +3,7 @@ name: Validate PR Conductor
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, v2]
 
 permissions:
   contents: read
@@ -13,14 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+
       - name: Bash syntax
         run: |
           bash -n scripts/pr-conductor.sh
           bash -n scripts/create-labels.sh
+          for file in scripts/lib/*.sh; do
+            bash -n "$file"
+          done
+
       - name: Required package files
         run: |
           test -f action.yml
           test -f .github/workflows/reusable.yml
+          test -f scripts/pr-conductor.sh
+          test -f scripts/lib/core.sh
+          test -f scripts/lib/standalone.sh
+          test -f scripts/lib/stack.sh
+          test -f scripts/lib/main.sh
           test -f examples/caller.yml
+          test -f examples/direct-action.yml
           test -f examples/standalone.yml
           test -f README.md
+          test -f SECURITY.md
+          test -f LICENSE
