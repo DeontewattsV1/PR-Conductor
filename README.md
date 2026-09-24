@@ -68,7 +68,7 @@ jobs:
       release_strategy: merge
 ```
 
-For a repository that cannot call reusable workflows, use `examples/direct-action.yml`. For a completely self-contained installation with no dependency on this repository, use `examples/standalone.yml`.
+For a repository that cannot call reusable workflows, use `examples/direct-action.yml`. For a one-file copy/paste installation that calls the versioned action directly, use `examples/standalone.yml`.
 
 ## One-time repository setup
 
@@ -242,25 +242,17 @@ org/repo-c ─┘        │
                      └── status comments
 ```
 
-## Publishing this repository
+## Versioning
 
-After uploading the files:
+The repository publishes a moving major-version branch named `v2` from validated `main`.
 
-```bash
-git tag v2.0.0
-git push origin v2.0.0
-
-git tag -f v2 v2.0.0
-git push origin v2 --force
-```
-
-Consumers can then reference:
+Consumers can reference:
 
 ```yaml
 uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
 ```
 
-For stronger supply-chain pinning, consumers can reference the immutable `v2.0.0` tag or a full commit SHA.
+For stronger supply-chain pinning, reference a full commit SHA. When cutting a formal GitHub release, add an immutable version tag such as `v2.0.0`.
 
 ## Profile snippet
 
