@@ -157,13 +157,13 @@ process_stack() {
 
   if ! should_auto_merge "$head_repo"; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** stack #$stack_number recognized · strategy `$strategy` · automatic stack merge is not enabled for this PR."
+**PR Conductor:** stack #$stack_number recognized · strategy '$strategy' · automatic stack merge is not enabled for this PR."
     return
   fi
 
   if ! ensure_stack_extension; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** stack #$stack_number recognized, but the official `github/gh-stack` extension could not be installed."
+**PR Conductor:** stack #$stack_number recognized, but the official 'github/gh-stack' extension could not be installed."
     return
   fi
 
@@ -208,7 +208,7 @@ process_stack() {
 
       if [[ "$after_fingerprint" != "$before_fingerprint" ]]; then
         upsert_comment "$pr" "$MARKER
-**PR Conductor:** stack #$stack_number cascade-rebased and pushed with lease protection · CI will rerun · planned merge `$strategy`."
+**PR Conductor:** stack #$stack_number cascade-rebased and pushed with lease protection · CI will rerun · planned merge '$strategy'."
         return
       fi
     fi
@@ -216,7 +216,7 @@ process_stack() {
 
   if bool_true "$DRY_RUN"; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** dry run · would merge all currently open PRs in stack #$stack_number · strategy `$strategy`."
+**PR Conductor:** dry run · would merge all currently open PRs in stack #$stack_number · strategy '$strategy'."
     return
   fi
 
@@ -227,16 +227,16 @@ process_stack() {
     merge) merge_args+=(--merge) ;;
     *)
       upsert_comment "$pr" "$MARKER
-**PR Conductor:** stack #$stack_number paused · unsupported strategy `$strategy`."
+**PR Conductor:** stack #$stack_number paused · unsupported strategy '$strategy'."
       return
       ;;
   esac
 
   if gh stack merge "${merge_args[@]}" >/dev/null 2>&1; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** stack #$stack_number merge submitted · strategy `$strategy` · GitHub rules/queue remain authoritative."
+**PR Conductor:** stack #$stack_number merge submitted · strategy '$strategy' · GitHub rules/queue remain authoritative."
   else
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** stack #$stack_number is waiting on checks, reviews, queue eligibility, or another GitHub merge requirement · strategy `$strategy`."
+**PR Conductor:** stack #$stack_number is waiting on checks, reviews, queue eligibility, or another GitHub merge requirement · strategy '$strategy'."
   fi
 }

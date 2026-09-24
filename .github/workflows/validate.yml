@@ -22,6 +22,23 @@ jobs:
             bash -n "$file"
           done
 
+      - name: Reject shell backticks
+        run: |
+          if grep -R -n -F '`' scripts/lib scripts/pr-conductor.sh; then
+            echo "Legacy shell backticks are forbidden in the runtime engine."
+            exit 1
+          fi
+
+      - name: Action entrypoint integrity
+        run: |
+          if [[ ! -f action.yml ]]; then
+            echo "::error file=action.yml::PR Conductor requires action.yml at the repository root. Do not rename or move it."
+            exit 1
+          fi
+          grep -Fq 'name: PR Conductor' action.yml
+          grep -Eq '^[[:space:]]*using:[[:space:]]*composite[[:space:]]*$' action.yml
+          grep -Fq 'scripts/pr-conductor.sh' action.yml
+
       - name: Required package files
         run: |
           test -f action.yml
