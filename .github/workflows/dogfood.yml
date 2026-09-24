@@ -1,0 +1,38 @@
+name: Dogfood PR Conductor
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - converted_to_draft
+      - labeled
+      - unlabeled
+      - edited
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pr-conductor-dogfood-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  conduct:
+    uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+      auto_merge_mode: off
+      auto_rebase: true
+      stack_sync: true
+      normalize_titles: true
+      comments: true
+      dry_run: true
+      default_single_strategy: rebase
+      default_multi_strategy: squash
+      release_strategy: merge
+      default_stack_strategy: squash
