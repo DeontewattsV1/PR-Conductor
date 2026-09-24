@@ -30,7 +30,7 @@ jobs:
           persist-credentials: true
 
       - name: Conduct PRs
-        uses: DeontewattsV1/pr-conductor@v2
+        uses: DeontewattsV1/PR-Conductor@v2
         with:
           pr-number: ${{ github.event.pull_request.number || 0 }}
           auto-merge-mode: same-repo

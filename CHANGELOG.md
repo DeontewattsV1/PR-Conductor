@@ -11,3 +11,6 @@
 - Added a single upserted PR status comment.
 - Added dry-run mode.
 - Added reusable workflow, composite action, direct-action example, and self-contained standalone workflow.
+- Added protected immediate-merge fallback when repository-level auto-merge is unavailable.
+- Added explicit root `action.yml` integrity validation to prevent broken Action relocations.
+- Live canary validated the real `@v2` merge path before release.

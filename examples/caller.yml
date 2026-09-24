@@ -34,7 +34,7 @@ concurrency:
 
 jobs:
   conduct:
-    uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
+    uses: DeontewattsV1/PR-Conductor/.github/workflows/reusable.yml@v2
     with:
       # Event runs process one PR. Scheduled/manual runs sweep all open PRs.
       pr_number: ${{ github.event.pull_request.number || 0 }}

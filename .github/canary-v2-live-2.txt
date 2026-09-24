@@ -1,2 +1,0 @@
-PR Conductor v2 live canary #2.
-This canary must be merged by the PR Conductor live workflow.

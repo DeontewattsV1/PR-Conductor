@@ -20,6 +20,8 @@
 
 Repository rules, required checks, CODEOWNERS, approvals, and merge queues remain authoritative. PR Conductor never uses `--admin` to bypass them.
 
+If repository-level auto-merge is disabled, PR Conductor can fall back to an ordinary protected `gh pr merge` once the PR is eligible. The fallback still respects required checks, reviews, rulesets, and branch protection because it never uses `--admin`.
+
 ## Fastest installation
 
 Create this file in any repository:
@@ -55,7 +57,7 @@ concurrency:
 
 jobs:
   conduct:
-    uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
+    uses: DeontewattsV1/PR-Conductor/.github/workflows/reusable.yml@v2
     with:
       pr_number: ${{ github.event.pull_request.number || 0 }}
       auto_merge_mode: same-repo
@@ -219,7 +221,7 @@ The reusable workflow supports `dry_run: true`.
 For a direct action call:
 
 ```yaml
-- uses: DeontewattsV1/pr-conductor@v2
+- uses: DeontewattsV1/PR-Conductor@v2
   with:
     pr-number: ${{ github.event.pull_request.number || 0 }}
     dry-run: true
@@ -233,7 +235,7 @@ An organization can place a tiny caller in every repository while keeping policy
 
 ```text
 org/repo-a ─┐
-org/repo-b ─┼──> DeontewattsV1/pr-conductor@v2
+org/repo-b ─┼──> DeontewattsV1/PR-Conductor@v2
 org/repo-c ─┘        │
                      ├── title policy
                      ├── rebase policy
@@ -249,7 +251,7 @@ The repository publishes a moving major-version branch named `v2` from validated
 Consumers can reference:
 
 ```yaml
-uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
+uses: DeontewattsV1/PR-Conductor/.github/workflows/reusable.yml@v2
 ```
 
 For stronger supply-chain pinning, reference a full commit SHA. When cutting a formal GitHub release, add an immutable version tag such as `v2.0.0`.
@@ -260,7 +262,7 @@ For stronger supply-chain pinning, reference a full commit SHA. When cutting a f
 ### PR Conductor
 Policy-driven GitHub PR automation for titles, rebase, squash/rebase/merge strategy selection, merge queues, and native stacked PRs — without bypassing repository protections.
 
-[View PR Conductor](https://github.com/DeontewattsV1/pr-conductor)
+[View PR Conductor](https://github.com/DeontewattsV1/PR-Conductor)
 ```
 
 ## Requirements
@@ -270,6 +272,7 @@ Policy-driven GitHub PR automation for titles, rebase, squash/rebase/merge strat
 - `jq` — included on GitHub-hosted Ubuntu runners
 - GitHub Stacked PR support for stack-specific features
 - Appropriate repository Actions/token permissions
+- `action.yml` must remain at the repository root for direct `uses: DeontewattsV1/PR-Conductor@...` calls
 
 ## Upstream references
 
