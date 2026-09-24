@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   release:
-    if: github.event.head_commit.message == 'release: publish v2.0.0'
+    if: "${{ github.event.head_commit.message == 'release: publish v2.0.0' }}"
     runs-on: ubuntu-latest
     steps:
       - name: Check out validated v2
