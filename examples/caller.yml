@@ -1,0 +1,55 @@
+name: PR Conductor
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - converted_to_draft
+      - labeled
+      - unlabeled
+      - edited
+  schedule:
+    # Retry waiting PRs/stacks and safely handle fork PR metadata.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Run without mutating PRs or branches
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+# Serialize conductor runs per repository. This avoids overlapping stack rebases.
+concurrency:
+  group: pr-conductor-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  conduct:
+    uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
+    with:
+      # Event runs process one PR. Scheduled/manual runs sweep all open PRs.
+      pr_number: ${{ github.event.pull_request.number || 0 }}
+
+      # same-repo = automatic for branches in this repository.
+      # Fork PRs need merge:auto unless you change this to all.
+      auto_merge_mode: same-repo
+
+      auto_rebase: true
+      stack_sync: true
+      normalize_titles: true
+      comments: true
+      dry_run: ${{ inputs.dry_run || false }}
+
+      default_single_strategy: rebase
+      default_multi_strategy: squash
+      release_strategy: merge
+      default_stack_strategy: squash
