@@ -1,7 +1,7 @@
 name: PR Conductor
 description: >-
-  Policy-driven pull request conductor for title normalization, rebasing,
-  auto-merge, merge queues, and GitHub stacked pull requests.
+  Policy-driven pull request conductor for title normalization,rebasing,
+  auto merge, merge queues, and Git stacked pull requests.
 author: Deonte Watts
 
 branding:
