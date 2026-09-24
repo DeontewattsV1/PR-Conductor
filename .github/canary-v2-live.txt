@@ -1,2 +1,0 @@
-PR Conductor v2 live-mode canary.
-This disposable file proves the real merge path.
