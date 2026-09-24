@@ -1,0 +1,91 @@
+name: Reusable PR Conductor
+
+on:
+  workflow_call:
+    inputs:
+      pr_number:
+        description: Pull request number. Use 0 to sweep all open PRs.
+        required: false
+        type: number
+        default: 0
+      auto_merge_mode:
+        description: "all | same-repo | labeled | off"
+        required: false
+        type: string
+        default: same-repo
+      auto_rebase:
+        required: false
+        type: boolean
+        default: true
+      stack_sync:
+        required: false
+        type: boolean
+        default: true
+      normalize_titles:
+        required: false
+        type: boolean
+        default: true
+      comments:
+        required: false
+        type: boolean
+        default: true
+      dry_run:
+        required: false
+        type: boolean
+        default: false
+      default_single_strategy:
+        description: "merge | squash | rebase"
+        required: false
+        type: string
+        default: rebase
+      default_multi_strategy:
+        description: "merge | squash | rebase"
+        required: false
+        type: string
+        default: squash
+      release_strategy:
+        description: "merge | squash | rebase"
+        required: false
+        type: string
+        default: merge
+      default_stack_strategy:
+        description: "merge | squash | rebase"
+        required: false
+        type: string
+        default: squash
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  conductor:
+    name: Conduct pull requests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # Always check out the caller repository's trusted default branch.
+      # Never check out pull-request code in this privileged workflow.
+      - name: Check out trusted base
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: PR Conductor
+        uses: DeontewattsV1/pr-conductor@v2
+        with:
+          pr-number: ${{ inputs.pr_number }}
+          auto-merge-mode: ${{ inputs.auto_merge_mode }}
+          auto-rebase: ${{ inputs.auto_rebase }}
+          stack-sync: ${{ inputs.stack_sync }}
+          normalize-titles: ${{ inputs.normalize_titles }}
+          comments: ${{ inputs.comments }}
+          dry-run: ${{ inputs.dry_run }}
+          default-single-strategy: ${{ inputs.default_single_strategy }}
+          default-multi-strategy: ${{ inputs.default_multi_strategy }}
+          release-strategy: ${{ inputs.release_strategy }}
+          default-stack-strategy: ${{ inputs.default_stack_strategy }}
