@@ -76,7 +76,7 @@ jobs:
           persist-credentials: true
 
       - name: PR Conductor
-        uses: DeontewattsV1/pr-conductor@v2
+        uses: DeontewattsV1/PR-Conductor@v2
         with:
           pr-number: ${{ inputs.pr_number }}
           auto-merge-mode: ${{ inputs.auto_merge_mode }}
