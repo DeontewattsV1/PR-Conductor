@@ -1,0 +1,32 @@
+name: Live Canary PR Conductor
+
+on:
+  pull_request:
+    types:
+      - edited
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pr-conductor-live-canary-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  conduct:
+    if: startsWith(github.head_ref, 'canary/')
+    uses: DeontewattsV1/PR-Conductor/.github/workflows/reusable.yml@v2
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+      auto_merge_mode: same-repo
+      auto_rebase: true
+      stack_sync: true
+      normalize_titles: true
+      comments: true
+      dry_run: false
+      default_single_strategy: rebase
+      default_multi_strategy: squash
+      release_strategy: merge
+      default_stack_strategy: squash

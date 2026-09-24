@@ -56,21 +56,21 @@ process_pr() {
 
   if [[ "$draft" == 'true' ]]; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** draft detected · planned strategy `$strategy` · merge paused until the PR is ready for review."
+**PR Conductor:** draft detected · planned strategy '$strategy' · merge paused until the PR is ready for review."
     echo '::endgroup::'
     return
   fi
 
   if has_label 'merge:hold'; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** `merge:hold` is active · no merge action taken."
+**PR Conductor:** 'merge:hold' is active · no merge action taken."
     echo '::endgroup::'
     return
   fi
 
   if has_label 'merge:manual'; then
     upsert_comment "$pr" "$MARKER
-**PR Conductor:** manual merge requested · strategy `$strategy` · automation will not merge this PR."
+**PR Conductor:** manual merge requested · strategy '$strategy' · automation will not merge this PR."
     echo '::endgroup::'
     return
   fi
