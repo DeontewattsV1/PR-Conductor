@@ -1,0 +1,77 @@
+name: PR Conductor
+description: >-
+  Policy-driven pull request conductor for title normalization, rebasing,
+  auto-merge, merge queues, and GitHub stacked pull requests.
+author: Deonte Watts
+
+branding:
+  icon: git-pull-request
+  color: purple
+
+inputs:
+  pr-number:
+    description: Pull request number to process. Use 0 to sweep all open PRs.
+    required: false
+    default: "0"
+  auto-merge-mode:
+    description: "all | same-repo | labeled | off"
+    required: false
+    default: same-repo
+  auto-rebase:
+    description: Rebase stale standalone PR branches automatically.
+    required: false
+    default: "true"
+  stack-sync:
+    description: Run gh stack sync before attempting a stacked PR merge.
+    required: false
+    default: "true"
+  normalize-titles:
+    description: Normalize non-conventional PR titles.
+    required: false
+    default: "true"
+  comments:
+    description: Maintain one small PR Conductor status comment per PR.
+    required: false
+    default: "true"
+  dry-run:
+    description: Report intended actions without mutating PRs or branches.
+    required: false
+    default: "false"
+  default-single-strategy:
+    description: Default merge method for one-commit PRs.
+    required: false
+    default: rebase
+  default-multi-strategy:
+    description: Default merge method for multi-commit PRs.
+    required: false
+    default: squash
+  release-strategy:
+    description: Default merge method for release/* and hotfix/* PRs.
+    required: false
+    default: merge
+  default-stack-strategy:
+    description: Default merge method for GitHub stacked pull requests.
+    required: false
+    default: squash
+
+runs:
+  using: composite
+  steps:
+    - name: Run PR Conductor
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO: ${{ github.repository }}
+        EVENT_NAME: ${{ github.event_name }}
+        TARGET_PR: ${{ inputs.pr-number }}
+        AUTO_MERGE_MODE: ${{ inputs.auto-merge-mode }}
+        AUTO_REBASE: ${{ inputs.auto-rebase }}
+        STACK_SYNC: ${{ inputs.stack-sync }}
+        NORMALIZE_TITLES: ${{ inputs.normalize-titles }}
+        COMMENT_ENABLED: ${{ inputs.comments }}
+        DRY_RUN: ${{ inputs.dry-run }}
+        DEFAULT_SINGLE_STRATEGY: ${{ inputs.default-single-strategy }}
+        DEFAULT_MULTI_STRATEGY: ${{ inputs.default-multi-strategy }}
+        RELEASE_STRATEGY: ${{ inputs.release-strategy }}
+        DEFAULT_STACK_STRATEGY: ${{ inputs.default-stack-strategy }}
+      run: bash "${{ github.action_path }}/scripts/pr-conductor.sh"
