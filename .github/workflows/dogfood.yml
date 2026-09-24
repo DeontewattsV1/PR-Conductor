@@ -23,7 +23,7 @@ concurrency:
 
 jobs:
   conduct:
-    uses: DeontewattsV1/pr-conductor/.github/workflows/reusable.yml@v2
+    uses: DeontewattsV1/PR-Conductor/.github/workflows/reusable.yml@v2
     with:
       pr_number: ${{ github.event.pull_request.number }}
       auto_merge_mode: off
