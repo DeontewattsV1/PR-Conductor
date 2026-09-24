@@ -71,6 +71,11 @@ process_standalone() {
     status='auto-merge enabled'
   elif gh pr merge "$pr" --repo "$GH_REPO" --auto >/dev/null 2>&1; then
     status='merge queue / auto-merge enabled'
+  elif gh pr merge "$pr" --repo "$GH_REPO" "${args[@]}" >/dev/null 2>&1; then
+    # Safe fallback for repositories where the auto-merge feature is disabled.
+    # This is still a normal GitHub merge: required checks, reviews, rulesets,
+    # and branch protection remain authoritative because --admin is never used.
+    status='merged immediately'
   fi
 
   upsert_comment "$pr" "$MARKER
