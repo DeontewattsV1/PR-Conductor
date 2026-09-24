@@ -35,34 +35,8 @@ jobs:
             echo "::error file=action.yml::PR Conductor requires action.yml at the repository root. Do not rename or move it."
             exit 1
           fi
-          grep -Eq '^name:[[:space:]]*PR Conductor[[:space:]]*          test -f action.yml
-          test -f .github/workflows/reusable.yml
-          test -f scripts/pr-conductor.sh
-          test -f scripts/lib/core.sh
-          test -f scripts/lib/standalone.sh
-          test -f scripts/lib/stack.sh
-          test -f scripts/lib/main.sh
-          test -f examples/caller.yml
-          test -f examples/direct-action.yml
-          test -f examples/standalone.yml
-          test -f README.md
-          test -f SECURITY.md
-          test -f LICENSE
- action.yml
-          grep -Eq '^[[:space:]]*using:[[:space:]]*composite[[:space:]]*          test -f action.yml
-          test -f .github/workflows/reusable.yml
-          test -f scripts/pr-conductor.sh
-          test -f scripts/lib/core.sh
-          test -f scripts/lib/standalone.sh
-          test -f scripts/lib/stack.sh
-          test -f scripts/lib/main.sh
-          test -f examples/caller.yml
-          test -f examples/direct-action.yml
-          test -f examples/standalone.yml
-          test -f README.md
-          test -f SECURITY.md
-          test -f LICENSE
- action.yml
+          grep -Fq 'name: PR Conductor' action.yml
+          grep -Eq '^[[:space:]]*using:[[:space:]]*composite[[:space:]]*$' action.yml
           grep -Fq 'scripts/pr-conductor.sh' action.yml
 
       - name: Required package files
