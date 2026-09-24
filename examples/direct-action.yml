@@ -1,0 +1,40 @@
+name: PR Conductor — Direct Action
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft, labeled, unlabeled, edited]
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pr-conductor-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  conductor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out trusted default branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Conduct PRs
+        uses: DeontewattsV1/pr-conductor@v2
+        with:
+          pr-number: ${{ github.event.pull_request.number || 0 }}
+          auto-merge-mode: same-repo
+          auto-rebase: true
+          stack-sync: true
+          normalize-titles: true
+          comments: true
