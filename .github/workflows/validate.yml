@@ -24,7 +24,7 @@ jobs:
 
       - name: Reject shell backticks
         run: |
-          if grep -R -n '\`' scripts/lib scripts/pr-conductor.sh; then
+          if grep -R -n -F '`' scripts/lib scripts/pr-conductor.sh; then
             echo "Legacy shell backticks are forbidden in the runtime engine."
             exit 1
           fi
