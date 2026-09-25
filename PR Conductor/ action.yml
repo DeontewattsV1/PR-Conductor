@@ -1,7 +1,6 @@
 name: PR Conductor
 description: >-
-  Policy-driven pull request conductor for title normalization,rebasing,
-  auto merge, merge queues, and Git stacked pull requests.
+  Pull request number to process. Use 0 to sweep all open PRs., .
 author: Deonte Watts
 
 branding:
