@@ -15,7 +15,7 @@ jobs:
   conduct:
     uses: DeontewattsV1/PR-Conductor/.github/workflows/reusable.yml@v2
     with:
-      pr_number: ${{ github.event.pull_request.number || 0 }}`;
+      pr_number: \${{ github.event.pull_request.number || 0 }}`;
 
 export default function Home() {
   return (
