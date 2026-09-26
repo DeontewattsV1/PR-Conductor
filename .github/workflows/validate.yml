@@ -54,3 +54,14 @@ jobs:
           test -f README.md
           test -f SECURITY.md
           test -f LICENSE
+
+      - name: Set up Node for launch companion
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build launch companion
+        working-directory: apps/launch
+        run: |
+          npm install --no-audit --no-fund --package-lock=false
+          npm run build
