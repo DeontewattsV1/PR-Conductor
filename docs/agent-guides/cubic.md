@@ -7,10 +7,10 @@ Cubic is a review-intelligence layer beneath repository policy, tests, CI, secur
 - Local review: install and sign in to the Cubic CLI.
 - PR comments/review loops: authenticate GitHub CLI and work from a local checkout.
 - Wiki, codebase scans, review learnings: connect Cubic's MCP server with OAuth for an account that can access this repository.
-- Install Codex skills with:
-  `npx @cubic-plugin/cubic-plugin install --to codex --skills-only`
+- Install Codex skills with the repository-reviewed package version:
+  `npx @cubic-plugin/cubic-plugin@1.5.0 install --to codex --skills-only`
 
-The skills-only installer intentionally leaves MCP configuration unchanged.
+The skills-only installer intentionally leaves MCP configuration unchanged. The installer version is intentionally pinned; before changing it, review the target package release and source changes, update the pin in a scoped PR, and rerun repository verification.
 
 ## Workflows
 
@@ -20,7 +20,7 @@ The skills-only installer intentionally leaves MCP configuration unchanged.
 If the working tree is clean, review the current branch against its base.
 
 ### PR findings
-`Use cubic's check-pr-comments skill to inspect unresolved review feedback. Verify every finding before changing code, fix actionable issues, run repository verification, commit and push the current PR branch, and resolve only handled threads. Do not merge.`
+`Use cubic's check-pr-comments skill to inspect unresolved review feedback. Verify every finding before changing code, fix actionable issues, run repository verification, commit and push the current PR branch, and resolve threads only after the issue is fixed, verified as already fixed, or verified as a false positive. Do not merge.`
 
 Read-only:
 `Use cubic's get_pr_issues MCP tool to summarize open findings. Do not change anything.`

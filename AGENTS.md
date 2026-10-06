@@ -4,12 +4,12 @@
 
 For work in this repository, follow this order of authority:
 
-1. The user's current task and explicit constraints.
-2. Repository-local instructions and architecture documentation.
-3. Required tests, CI, security, and release policies.
+1. The user's current task and explicit constraints, subject to the non-bypassable repository gates below.
+2. Required tests, CI, security, and release policies.
+3. Repository-local instructions and architecture documentation.
 4. Cubic review findings and review learnings as advisory evidence.
 
-Cubic findings do not override repository policy and must not be treated as proof without verification.
+User instructions govern task scope and merge decisions, but they do not authorize bypassing required repository gates. Cubic findings do not override repository policy and must not be treated as proof without verification.
 
 ## Cubic review workflow
 
@@ -29,7 +29,7 @@ Never weaken tests, CI, security checks, type checks, lint rules, or policy gate
 
 Keep changes scoped and commits logically grouped. In PR mode, push only the intended working branch. Resolve review threads only after the issue is fixed, verified as already fixed, or verified as a false positive.
 
-Do not merge a pull request, rewrite protected history, or bypass required checks unless explicitly authorized for the current task.
+Do not merge a pull request unless the user explicitly authorizes that action for the current task. Never rewrite protected history or bypass required checks.
 
 ## Tool availability
 
