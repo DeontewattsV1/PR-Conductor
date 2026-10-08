@@ -7,23 +7,12 @@ For work in this repository, follow this order of authority:
 1. The user's current task and explicit constraints, subject to the non-bypassable repository gates below.
 2. Required tests, CI, security, and release policies.
 3. Repository-local instructions and architecture documentation.
-4. Cubic review findings and review learnings as advisory evidence.
 
-User instructions govern task scope and merge decisions, but they do not authorize bypassing required repository gates. Cubic findings do not override repository policy and must not be treated as proof without verification.
+User instructions govern task scope and merge decisions, but they do not authorize bypassing required repository gates.
 
-## Cubic review workflow
+## Review verification
 
-Read `docs/agent-guides/cubic.md` before using Cubic in this repository.
-
-Use Cubic when available for local reviews, unresolved PR feedback, iterative review/fix loops, codebase Wiki context, codebase scan findings, and team review learnings.
-
-Before changing code for a Cubic finding:
-1. Reproduce or verify the finding against the current checkout.
-2. Classify it as confirmed, architectural, maintainability, security, stale/already fixed, or false positive.
-3. Modify code only for actionable findings.
-4. Run the repository's required verification after the change.
-
-Never weaken tests, CI, security checks, type checks, lint rules, or policy gates merely to make a Cubic review pass. Do not add suppressions or `|| true` workarounds unless explicitly required for a documented repository reason.
+Verify findings against current evidence before changing code. After each change, run the repository-required verification, including applicable tests, builds, lint, type checks, security, and evidence checks; report any unavailable or failing gate. Never weaken tests, security controls, lint, type checks, or required review gates. Resolve review threads only when their findings are fixed, already fixed, or verified false positive.
 
 ## Git and pull requests
 
@@ -33,6 +22,4 @@ Do not merge a pull request unless the user explicitly authorizes that action fo
 
 ## Tool availability
 
-Cubic CLI review requires a signed-in Cubic CLI. PR workflows require authenticated GitHub tooling and a local checkout. Wiki, scan, and review-learning workflows require the Cubic MCP connection.
-
-If a required Cubic capability is unavailable, report that limitation and continue with repository-native verification where possible. Never fabricate Cubic results.
+PR workflows require authenticated GitHub tooling and a local checkout. Report unavailable verification capabilities; never fabricate results.
