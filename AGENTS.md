@@ -12,7 +12,7 @@ User instructions govern task scope and merge decisions, but they do not authori
 
 ## Review verification
 
-Verify findings against current evidence before changing code. Never weaken tests, security controls, lint, type checks, or required review gates. Resolve review threads only when their findings are fixed, already fixed, or verified false positive.
+Verify findings against current evidence before changing code. After each change, run the repository-required verification, including applicable tests, builds, lint, type checks, security, and evidence checks; report any unavailable or failing gate. Never weaken tests, security controls, lint, type checks, or required review gates. Resolve review threads only when their findings are fixed, already fixed, or verified false positive.
 
 ## Git and pull requests
 
